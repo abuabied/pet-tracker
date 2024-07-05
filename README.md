@@ -25,3 +25,6 @@ Register
 Login
 Logout
 Profile info...
+
+**Ready for Task 2**
+*Add new features*
