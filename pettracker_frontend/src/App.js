@@ -7,6 +7,7 @@ import { HelpPage } from "./pages/help/Help";
 import { ProfilePageOutlet } from "./pages/profile/ProfilePageOutlet";
 import { RegisterView } from "./pages/profile/RegisterView";
 import { ProfilePage } from "./pages/profile/ProfilePage";
+import { ProfileInfo } from "./pages/profile/ProfileInfo";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/profile" element={<ProfilePageOutlet />}>
             <Route index element={<ProfilePage />} />
+            <Route path="/profile/info" element={<ProfileInfo />} />
             <Route path="/profile/register" element={<RegisterView />} />
           </Route>
           <Route path="/help" element={<HelpPage />} />

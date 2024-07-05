@@ -18,9 +18,9 @@ export const ProfileOptionBackButton = () => {
       }}
     >
       <ListItemIcon sx={{ minWidth: "auto", marginRight: "5px" }}>
-        <ArrowBackIcon sx={{ color: "ghostwhite" }} />
+        <ArrowBackIcon sx={{ color: "black" }} />
       </ListItemIcon>
-      <ListItemText primary={"Back"} sx={{ color: "ghostwhite" }} />
+      <ListItemText primary={"Back"} />
     </ListItemButton>
   );
 };

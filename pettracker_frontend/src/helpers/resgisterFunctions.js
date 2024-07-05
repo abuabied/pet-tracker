@@ -41,7 +41,7 @@ export const validateRegisterData = (data) => {
   return errors.filter((err) => err !== true);
 };
 
-export const validateUpdatedData = (data) => {
+export const validateUpdatedData = (data, isUpdate) => {
   let errors = [];
   let c1 = validateName(data?.firstName);
   if (c1 !== true) {
@@ -63,9 +63,12 @@ export const validateUpdatedData = (data) => {
     return errors;
   }
 
-  errors.push(validatePasswordLength(data?.password));
-  errors.push(validatePasswordContentLetters(data?.password));
-  errors.push(validatePasswordContentDigit(data?.password));
+  if (isUpdate || data?.password !== "") {
+    errors.push(validatePasswordLength(data?.password));
+    errors.push(validatePasswordContentLetters(data?.password));
+    errors.push(validatePasswordContentDigit(data?.password));
+  }
+  
   return errors.filter((err) => err !== true);
 };
 

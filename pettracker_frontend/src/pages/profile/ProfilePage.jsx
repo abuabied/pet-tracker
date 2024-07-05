@@ -1,5 +1,7 @@
+import { isLogged } from "../../helpers/helperFunctions";
 import { LoginView } from "./LoginView";
+import { ProfileView } from "./ProfileView";
 
 export const ProfilePage = () => {
-  return <LoginView />;
+  return <>{isLogged() ? <ProfileView /> : <LoginView />} </>;
 };

@@ -59,6 +59,7 @@ export const RegisterView = () => {
       );
     } else {
       const res = await registerUser(registerData);
+      console.log(res)
       switch (res?.status) {
         case HttpStatusCode.Created:
           toast.success(REGISTRATION_MESSAGES.REGISTERED);
