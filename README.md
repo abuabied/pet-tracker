@@ -3,6 +3,7 @@ Pet Tracker - Web App to track, organise and manage your pets' well being.
 
 How to run:
 -Clone reposiotry
+
 -In the FrontEnd repo run npm install, then npm start to run the FE servers
 -Run the main function in the PettrackerApplication.java file to start the servers
 
@@ -24,7 +25,7 @@ Update...
 Register
 Login
 Logout
-Profile info...\n
+Profile info...
 
 **Ready for Task 2**
 *Add new features*
