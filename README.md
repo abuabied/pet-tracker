@@ -1,17 +1,26 @@
 # pet-tracker
-Pet Tracker - Web App to track, organise and manage your pets' well being. 
+Pet Tracker - Web App to track, organize and manage your pets' wellbeing. 
 
 How to run:
--Clone reposiotry
 
--In the FrontEnd repo run npm install, then npm start to run the FE servers
+*Prerequisites:
+
+-Java JDK (17^) - Backend
+
+-Node(latest), npm - Frontend
+
+*Setup & Run:
+
+-Clone repository
+
+-In the FrontEnd folder run "npm install" to install the necessary modules, then "npm start" to run the FE website (running on "https://localhost:3000/")
 
 -Run the main function in the PettrackerApplication.java file to start the servers
 
 
 ***Task 1:***
 
--Setup & Create new databse using MongoDB
+-Setup & Create new database using MongoDB
 
 -Setup Initial backend servers using Java Spring Boot
 
