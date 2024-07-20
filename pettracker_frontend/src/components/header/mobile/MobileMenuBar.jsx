@@ -12,9 +12,15 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import InfoIcon from "@mui/icons-material/Info";
 import HomeIcon from "@mui/icons-material/Home";
+import PetsIcon from '@mui/icons-material/Pets';
+import DoorSlidingIcon from '@mui/icons-material/DoorSliding';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { scrollToTop } from "../../../helpers/setWindowSize";
+import { REGISTRATION_MESSAGES } from "../../../consts/StringConsts";
+import { isLogged } from "../../../helpers/helperFunctions";
+import { toast } from "react-toastify";
 
 export const MobileMenuBar = () => {
   const navigate = useNavigate();
@@ -22,6 +28,16 @@ export const MobileMenuBar = () => {
     setdrawerState(false);
     scrollToTop();
     navigate("/");
+  };
+  const goToPage = (pageName) => {
+    if (isLogged()) {
+      scrollToTop();
+      navigate(`${"/" + pageName}`);
+    } else {
+      toast.warning(
+        REGISTRATION_MESSAGES.GENERAL_MESSAGES.LOGIN_BEFORE_ACTION
+      );
+    }
   };
   const goToHelp = () => {
     setdrawerState(false);
@@ -79,6 +95,33 @@ export const MobileMenuBar = () => {
                 <HomeIcon sx={{ color: "white" }} />
               </ListItemIcon>
               <ListItemText primary="Home" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem>
+            <ListItemButton onClick={() => goToPage("pets")}>
+              <ListItemIcon>
+                <PetsIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Pets" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem>
+            <ListItemButton onClick={() => goToPage("visits")}>
+              <ListItemIcon>
+                <DoorSlidingIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Visits" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem>
+            <ListItemButton onClick={() => goToPage("clinics")}>
+              <ListItemIcon>
+                <LocalHospitalIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Clinics" />
             </ListItemButton>
           </ListItem>
 

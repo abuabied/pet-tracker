@@ -20,6 +20,9 @@ function App() {
             <Route path="/profile/info" element={<ProfileInfo />} />
             <Route path="/profile/register" element={<RegisterView />} />
           </Route>
+          <Route path="/pets" element={<h1>My pets</h1>} />
+          <Route path="/visits" element={<h1>My visits</h1>} />
+          <Route path="/clinics" element={<h1>My clinics</h1>} />
           <Route path="/help" element={<HelpPage />} />
           <Route path="/*" element={<NoPage />} />
         </Route>
