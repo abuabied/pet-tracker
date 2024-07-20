@@ -8,6 +8,7 @@ import { ProfilePageOutlet } from "./pages/profile/ProfilePageOutlet";
 import { RegisterView } from "./pages/profile/RegisterView";
 import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ProfileInfo } from "./pages/profile/ProfileInfo";
+import { PetsPage } from "./pages/pets/PetsPage";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
             <Route path="/profile/info" element={<ProfileInfo />} />
             <Route path="/profile/register" element={<RegisterView />} />
           </Route>
-          <Route path="/pets" element={<h1>My pets</h1>} />
+          <Route path="/pets" element={<PetsPage />} />
           <Route path="/visits" element={<h1>My visits</h1>} />
           <Route path="/clinics" element={<h1>My clinics</h1>} />
           <Route path="/help" element={<HelpPage />} />
