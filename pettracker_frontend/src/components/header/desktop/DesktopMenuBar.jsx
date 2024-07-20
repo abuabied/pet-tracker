@@ -13,7 +13,7 @@ import PetsIcon from '@mui/icons-material/Pets';
 import DoorSlidingIcon from '@mui/icons-material/DoorSliding';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import { isLogged } from "../../../helpers/helperFunctions";
-import { REGISTRATION_MESSAGES } from "../../../consts/StringConsts";
+import { GENERAL_MESSAGES } from "../../../consts/StringConsts";
 import { toast } from "react-toastify";
 
 export const DesktopMenuBar = () => {
@@ -24,14 +24,14 @@ export const DesktopMenuBar = () => {
     };
     const goToPage = (pageName) => {
         if (isLogged()) {
-          scrollToTop();
-          navigate(`${"/" + pageName}`);
+            scrollToTop();
+            navigate(`${"/" + pageName}`);
         } else {
-          toast.warning(
-            REGISTRATION_MESSAGES.GENERAL_MESSAGES.LOGIN_BEFORE_ACTION
-          );
+            toast.warning(
+                GENERAL_MESSAGES.LOGIN_BEFORE_ACTION
+            );
         }
-      };
+    };
     const goToHelp = () => {
         scrollToTop();
         navigate("/help");
