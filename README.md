@@ -50,3 +50,17 @@ Profile info...
 *Add new features*
 
 ***Task 2:***
+
+-Add all pages skeleton 
+
+-Add Item is ready
+
+***TO DO***
+
+-Complete the add with the server and database
+
+-Get items from the database and present them in page
+
+-Complete the Search feature
+
+-Complete the filter feature
