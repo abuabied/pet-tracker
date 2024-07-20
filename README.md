@@ -53,6 +53,14 @@ Logout
 
 Profile info...
 
+**Summary**
+
+-Database is up and running - ready to handle data
+
+-Backend base is ready - Main microservers with initial models
+
+-Frontend base is ready - Basic website layout, Main flow like signin and register is available. Ready for new features
+
 
 **Ready for Task 2**
 
@@ -60,16 +68,59 @@ Profile info...
 
 ***Task 2:***
 
--Add all pages skeleton 
+-Add all pages skeleton
 
--Add Item is ready
+*Create page files 
+
+*Setup page layout
+
+*Add routing
+
+-The Add item infra is ready
+
+*Create and set necessary components - Add button and event handlers
+
+*Create the New item form - inputs, buttons, and event handlers
 
 ***TO DO***
 
--Complete the add with the server and database
+-Complete the Add item feature
+
+*Add valid items to the database
 
 -Get items from the database and present them in page
 
+*Complete the in page data display component
+
+*Retrieve data from the database and display it in page 
+
 -Complete the Search feature
 
--Complete the filter feature
+*Filters displayed data based on searched keyword
+
+-Complete the Filters feature
+
+*Filters displayed data based on set filters
+
+-Display Recent activity
+
+*Show Recent activities in Home page when logged in 
+
+**Summary**
+
+-Backend has more services - Handle all user requests and data
+
+-Frontend is ready - Complete flow, responsive, with main features added.
+
+
+**Ready for Task 3**
+
+*User review - final touch-ups - testing*
+
+***Task 3:***
+
+-All flows are working
+
+-Pleasant user experience 
+
+-Additional features
