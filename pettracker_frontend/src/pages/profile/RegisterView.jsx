@@ -15,7 +15,7 @@ import {
 import { scrollToTop } from "../../helpers/setWindowSize";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { validateRegisterData } from "../../helpers/resgisterFunctions";
+import { validateRegisterData } from "../../helpers/validationFunctions";
 import { registerUser } from "../../services/apiServices";
 import { HttpStatusCode } from "axios";
 import { COOKIES_IDS, REGISTRATION_MESSAGES } from "../../consts/StringConsts";
@@ -59,12 +59,10 @@ export const RegisterView = () => {
       );
     } else {
       const res = await registerUser(registerData);
-      console.log(res)
       switch (res?.status) {
         case HttpStatusCode.Created:
           toast.success(REGISTRATION_MESSAGES.REGISTERED);
           setCookie(COOKIES_IDS.USERNAME, registerData.username);
-          setCookie(COOKIES_IDS.GAME_COLLECTION,"");
           goToHome();
           break;
         case HttpStatusCode.Conflict:
