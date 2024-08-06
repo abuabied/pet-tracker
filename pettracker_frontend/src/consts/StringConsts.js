@@ -1,6 +1,6 @@
 export const REGISTRATION_MESSAGES = {
   INVALID_PASSWORD_LENGTH: "Password must be between 6 to 12 charachters long!",
-  INVALID_NAME: "Make sure you entered a valid First & Last name! (no spaces or numbers)",
+  INVALID_NAME: "Make sure you entered a valid name! (no spaces or numbers, minimum 3 letters)",
   INVALID_USERNAME_TOO_SHORT: "UserName must be at least 3 characters long!",
   INVALID_PASSWORD_NO_LETTER_OR_HAS_SPACE:
     "Password must has at least 1 letter and no spaces!",
@@ -30,6 +30,9 @@ export const API_PATHS = {
   REGISTER: "/user/register",
   GET_USER: "/user/getUser",
   UPDATE_USER: "/user/update",
+  ADD_PET: "/user/addPet",
+  REMOVE_PET: "/user/removePet",
+  GET_PETS: "/user/getPets",
 };
 
 export const COOKIES_IDS = {
@@ -39,4 +42,9 @@ export const COOKIES_IDS = {
 export const GENERAL_MESSAGES = {
   REFRESH: "Something went wrong! Please refresh the page.",
   LOGIN_BEFORE_ACTION: "Login first!",
+}
+
+export const PETS_MESSAGES = {
+  ADDED: "New pet is added.",
+  ERROR_GENERAL: "Something happend!",
 }

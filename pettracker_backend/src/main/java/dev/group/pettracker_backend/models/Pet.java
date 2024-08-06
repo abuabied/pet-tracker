@@ -1,16 +1,19 @@
 package dev.group.pettracker_backend.models;
 
 import lombok.AllArgsConstructor;
-import lombok.Generated;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import lombok.Setter;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "pets")
-public class Pet {
-    @Id
-    private String id;
 
+@Document(collection = "pets")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+public class Pet {
     private String owner;
 
     private String name;

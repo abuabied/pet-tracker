@@ -2,6 +2,15 @@ import passwordValidator from "password-validator";
 import isEmail from "validator/lib/isEmail";
 import { REGISTRATION_MESSAGES } from "../consts/StringConsts";
 
+export const validateNewPetData = (data) => {
+  let errors = [];
+  let c1 = validateName(data?.name);
+  if (c1 !== true) {
+    errors.push(c1);
+  }
+    return errors;
+}
+
 export const validateRegisterData = (data) => {
   let errors = [];
   let c1 = validateName(data?.firstName);

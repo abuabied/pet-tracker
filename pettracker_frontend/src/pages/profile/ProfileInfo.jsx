@@ -8,7 +8,7 @@ import {
   EmptyLine,
 } from "../../components/helper components/EmptyLines";
 import { toast } from "react-toastify";
-import { validateUpdatedData } from "../../helpers/resgisterFunctions";
+import { validateUpdatedData } from "../../helpers/validationFunctions";
 import {
   deleteCookie,
   getCookie,

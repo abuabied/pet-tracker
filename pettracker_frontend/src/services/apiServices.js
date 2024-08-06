@@ -42,3 +42,25 @@ export const updateUser = async (user) => {
     return error.response;
   }
 };
+
+export const addPet = async (pet, username) => {
+  try {
+    const response = await api.post(API_PATHS.ADD_PET, {username: username, pet: pet}, {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const getPets = async (user) => {
+  try {
+    const response = await api.post(API_PATHS.GET_PETS, user , {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
