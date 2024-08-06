@@ -96,15 +96,6 @@ Profile info...
 
 -Complete the Search feature
 
-*Filters displayed data based on searched keyword
-
--Complete the Filters feature
-
-*Filters displayed data based on set filters
-
--Display Recent activity
-
-*Show Recent activities in Home page when logged in 
 
 **Summary**
 
