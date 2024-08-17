@@ -26,4 +26,6 @@ public class Pet {
 
     private int weight;
 
+    private String image;
+
 }

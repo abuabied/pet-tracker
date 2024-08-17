@@ -83,21 +83,21 @@ public class UserController {
 
         return userService.getPets(user.getUsername());
     }
-    //
-    // @PostMapping("/removeGame")
-    // public ResponseEntity<String> removeGameFromUserCollection(@RequestBody
-    // UserGameDto userGameDto) {
-    // if (userGameDto == null) {
-    // return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    // }
-    // User user = userGameDto.getUser();
-    // Game game = userGameDto.getGame();
-    //
-    // if (user == null || game == null) {
-    // return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    // }
-    // return userService.removeGameFromCollection(user, game);
-    // }
+
+    @PostMapping("/removePet")
+    public ResponseEntity<String> removePet(@RequestBody UserPetDTO userPet) {
+        if (userPet == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        String username = userPet.getUsername();
+        Pet pet = userPet.getPet();
+        pet.setOwner(username);
+        if (pet == null || username.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return userService.removePet(pet, username);
+    }
     //
     // @PostMapping("/getGamesCollection")
     // public ResponseEntity<Collection<Game>> getUserGamesCollection(@RequestBody
