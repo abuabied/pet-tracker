@@ -64,3 +64,14 @@ export const getPets = async (user) => {
     return error.response;
   }
 };
+
+export const removePets = async (pet, username) => {
+  try {
+    const response = await api.post(API_PATHS.REMOVE_PET, {username: username, pet: pet},  {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};

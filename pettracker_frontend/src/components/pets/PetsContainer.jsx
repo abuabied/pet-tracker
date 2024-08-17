@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { getCookie } from "../../helpers/helperFunctions";
 import { toast } from "react-toastify";
 import { HttpStatusCode } from "axios";
-import { getPets } from "../../services/apiServices";
+import { getPets, removePets } from "../../services/apiServices";
+import { COOKIES_IDS, PETS_MESSAGES } from "../../consts/StringConsts";
 
 export const ItemsContainer = ({ items }) => {
     const [myItems, setItems] = useState(items)
@@ -16,7 +17,38 @@ export const ItemsContainer = ({ items }) => {
         setItems(filtered)
     }
 
-    
+    const getPetsList = async () => {
+        const user = {
+            username: getCookie("username"),
+        };
+        const res = await getPets(user);
+        switch (res?.status) {
+            case HttpStatusCode.Ok:
+                setItems(res?.data)
+                break;
+            default:
+                toast.warning("Could not retrieve all pets");
+        }
+    }
+
+    const removePet = async (petName) => {
+        const petData = {
+            name: petName.trim(),
+        };
+        const user = getCookie(COOKIES_IDS.USERNAME)
+        const res = await removePets(petData, user);
+        switch (res?.status) {
+            case HttpStatusCode.Ok:
+                toast.success("Pet removed!");
+                getPetsList();
+                setTimeout(1000);
+                break;
+            default:
+                toast.error(PETS_MESSAGES.ERROR_GENERAL);
+        }
+    }
+
+
     useEffect(() => {
         const getPetsList = async () => {
             const user = {
@@ -32,7 +64,6 @@ export const ItemsContainer = ({ items }) => {
             }
         }
         getPetsList()
-        console.log(items.length)
     }, []);
 
     return (
@@ -60,7 +91,7 @@ export const ItemsContainer = ({ items }) => {
             >
                 {
                     myItems.map((pet) => {
-                        return <PetCard pet={pet} />;
+                        return <PetCard pet={pet} removePet={removePet} />;
                     })
                 }
             </Container>

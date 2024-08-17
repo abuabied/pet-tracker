@@ -86,7 +86,18 @@ public class UserService {
                 if (userToUpdate.get().getPets() == null) {
                     userToUpdate.get().setPets(new HashSet<>());
                 }
-                userToUpdate.get().getPets().add(pet);
+                boolean flag = true;
+                for (Pet pet2 : userToUpdate.get().getPets()) {
+                    if (pet2.getName().compareTo(pet.getName()) == 0) {
+                        flag = false;
+                    }
+                }
+                if (flag) {
+                    userToUpdate.get().getPets().add(pet);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.CONFLICT);
+                }
+
                 if (userRepository.save(userToUpdate.get()) != null) {
                     return new ResponseEntity<>(HttpStatus.OK);
                 }
@@ -112,6 +123,30 @@ public class UserService {
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
+        } catch (Exception err) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    public ResponseEntity<String> removePet(Pet pet, String username) {
+        try {
+            Optional<User> userToUpdate = userRepository.findByUsername(username);
+            Pet tmp = null;
+            for (Pet pet2 : userToUpdate.get().getPets()) {
+                if (pet2.getName().compareTo(pet.getName()) == 0) {
+                    tmp = pet2;
+                }
+            }
+
+            if (tmp != null) {
+                userToUpdate.get().getPets().remove(tmp);
+            }
+
+            if (userRepository.save(userToUpdate.get()) != null) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception err) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
