@@ -1,7 +1,9 @@
 package dev.group.pettracker_backend.controllers;
 
+import dev.group.pettracker_backend.models.Clinic;
 import dev.group.pettracker_backend.models.Pet;
 import dev.group.pettracker_backend.models.User;
+import dev.group.pettracker_backend.models.DTOs.UserClinicDTO;
 import dev.group.pettracker_backend.models.DTOs.UserPetDTO;
 import dev.group.pettracker_backend.services.UserService;
 
@@ -98,13 +100,46 @@ public class UserController {
 
         return userService.removePet(pet, username);
     }
-    //
-    // @PostMapping("/getGamesCollection")
-    // public ResponseEntity<Collection<Game>> getUserGamesCollection(@RequestBody
-    // User user) {
-    // if (user == null) {
-    // return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    // }
-    // return userService.getGamesCollection(user);
-    // }
+
+    @PostMapping("/addClinic")
+    public ResponseEntity<String> addClinic(@RequestBody UserClinicDTO userClinic) {
+        if (userClinic == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        String username = userClinic.getUsername();
+        Clinic clinic = userClinic.getClinic();
+
+        if (clinic == null || username.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return userService.addClinic(clinic, username);
+    }
+
+    @PostMapping("/getClinics")
+    public ResponseEntity<HashSet<Clinic>> getClinics(@RequestBody User user) {
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (user.getUsername().equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return userService.getClinics(user.getUsername());
+    }
+
+    @PostMapping("/removeClinic")
+    public ResponseEntity<String> removeClinic(@RequestBody UserClinicDTO userClinic) {
+        if (userClinic == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        String username = userClinic.getUsername();
+        Clinic clinic = userClinic.getClinic();
+
+        if (clinic == null || username.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return userService.removeClinic(clinic, username);
+    }
 }

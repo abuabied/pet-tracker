@@ -33,6 +33,9 @@ export const API_PATHS = {
   ADD_PET: "/user/addPet",
   REMOVE_PET: "/user/removePet",
   GET_PETS: "/user/getPets",
+  ADD_CLINIC: "/user/addClinic",
+  REMOVE_CLINIC: "/user/removeClinic",
+  GET_CLINICS: "/user/getClinics",
 };
 
 export const COOKIES_IDS = {

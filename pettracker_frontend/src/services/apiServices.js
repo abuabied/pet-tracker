@@ -75,3 +75,36 @@ export const removePets = async (pet, username) => {
     return error.response;
   }
 };
+
+export const addClinic= async (clinic, username) => {
+  try {
+    const response = await api.post(API_PATHS.ADD_CLINIC, {username: username, clinic: clinic}, {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const getClinics = async (user) => {
+  try {
+    const response = await api.post(API_PATHS.GET_CLINICS, user , {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const removeClinic = async (clinic, username) => {
+  try {
+    const response = await api.post(API_PATHS.REMOVE_CLINIC, {username: username, clinic: clinic},  {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};

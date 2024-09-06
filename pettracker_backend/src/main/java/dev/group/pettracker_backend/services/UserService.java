@@ -2,6 +2,7 @@ package dev.group.pettracker_backend.services;
 
 import dev.group.pettracker_backend.Helpers.HelperFunctions;
 import dev.group.pettracker_backend.Repositories.UserRepository;
+import dev.group.pettracker_backend.models.Clinic;
 import dev.group.pettracker_backend.models.Pet;
 import dev.group.pettracker_backend.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,45 +154,79 @@ public class UserService {
 
     }
 
-    // public ResponseEntity<String> removeGameFromCollection(User user, Game game)
-    // {
-    // try {
-    // Optional<User> userToUpdate =
-    // userRepository.findByUsername(user.getUsername());
-    // if (!userToUpdate.isEmpty()) {
-    // if (userToUpdate.get().getGameCollection() != null) {
-    // userToUpdate.get().getGameCollection().remove(game.getGameID());
-    // if (userRepository.save(userToUpdate.get()) != null) {
-    // String gameIDsString = HelperFunctions
-    // .getGameCollectionItemsAsIDString(userToUpdate.get().getGameCollection());
-    // return new ResponseEntity<>(gameIDsString, HttpStatus.OK);
-    // } else {
-    // return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
-    // }
-    // } else {
-    // return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
-    // }
-    // } else {
-    // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    // }
-    // } catch (Exception err) {
-    // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
-    // }
-    //
-    // public ResponseEntity<Collection<Game>> getGamesCollection(User user) {
-    // try {
-    // Optional<User> checkUser = userRepository.findByUsername(user.getUsername());
-    // if (!checkUser.isEmpty()) {
-    // checkUser.get().setPassword("");
-    // return new ResponseEntity<>(checkUser.get().getGameCollection().values(),
-    // HttpStatus.OK);
-    // }
-    // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    // } catch (Exception err) {
-    // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
-    // }
+    public ResponseEntity<String> addClinic(Clinic clinic, String username) {
+        try {
+            Optional<User> userToUpdate = userRepository.findByUsername(username);
+            if (!userToUpdate.isEmpty()) {
+                if (userToUpdate.get().getClinics() == null) {
+                    userToUpdate.get().setClinics(new HashSet<>());
+                }
+                boolean flag = true;
+                for (Clinic clinic2 : userToUpdate.get().getClinics()) {
+                    if (clinic2.getName().compareTo(clinic.getName()) == 0) {
+                        flag = false;
+                    }
+                }
+                if (flag) {
+                    userToUpdate.get().getClinics().add(clinic);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.CONFLICT);
+                }
+
+                if (userRepository.save(userToUpdate.get()) != null) {
+                    return new ResponseEntity<>(HttpStatus.OK);
+                }
+                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception err) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    public ResponseEntity<HashSet<Clinic>> getClinics(String username) {
+        try {
+            Optional<User> userToUpdate = userRepository.findByUsername(username);
+            if (!userToUpdate.isEmpty()) {
+                if (userToUpdate.get().getClinics() == null) {
+                    userToUpdate.get().setClinics(new HashSet<>());
+                }
+                HashSet<Clinic> clinics = userToUpdate.get().getClinics();
+                return new ResponseEntity<>(clinics, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception err) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    public ResponseEntity<String> removeClinic(Clinic clinic, String username) {
+        try {
+            Optional<User> userToUpdate = userRepository.findByUsername(username);
+            Clinic tmp = null;
+            for (Clinic clinic2: userToUpdate.get().getClinics()) {
+                if (clinic2.getName().compareTo(clinic.getName()) == 0) {
+                    tmp = clinic2;
+                }
+            }
+
+            if (tmp != null) {
+                userToUpdate.get().getClinics().remove(tmp);
+            }
+
+            if (userRepository.save(userToUpdate.get()) != null) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception err) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 
     private Optional<User> checkIfUserExists(User user) {
         Optional<User> checkUser = Optional.empty();

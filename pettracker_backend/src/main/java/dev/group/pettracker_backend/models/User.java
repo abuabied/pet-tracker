@@ -29,6 +29,6 @@ public class User {
 
     private HashSet<String> visits;
 
-    private HashSet<String> clinics;
+    private HashSet<Clinic> clinics;
 
 }
