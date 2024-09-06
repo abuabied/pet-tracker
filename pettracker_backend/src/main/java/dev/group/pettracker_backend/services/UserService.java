@@ -154,6 +154,41 @@ public class UserService {
 
     }
 
+    public ResponseEntity<String> updatePet(String oldName, Pet pet, String username) {
+        try {
+            Optional<User> userToUpdate = userRepository.findByUsername(username);
+            if (!userToUpdate.isEmpty()) {
+                if (userToUpdate.get().getPets() == null) {
+                    userToUpdate.get().setPets(new HashSet<>());
+                }
+                Pet tmpPet = null;
+                for (Pet pet2 : userToUpdate.get().getPets()) {
+
+                    if (pet2.getName().compareTo(pet.getName()) == 0) {
+                        if (pet.getName().compareTo(oldName) != 0) {
+                            return new ResponseEntity<>(HttpStatus.CONFLICT);
+                        }
+                    }
+                    if (pet2.getName().compareTo(oldName) == 0) {
+                        tmpPet = pet2;
+                    }
+                }
+                userToUpdate.get().getPets().remove(tmpPet);
+                userToUpdate.get().getPets().add(pet);
+
+                if (userRepository.save(userToUpdate.get()) != null) {
+                    return new ResponseEntity<>(HttpStatus.OK);
+                }
+                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception err) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
     public ResponseEntity<String> addClinic(Clinic clinic, String username) {
         try {
             Optional<User> userToUpdate = userRepository.findByUsername(username);
@@ -208,7 +243,7 @@ public class UserService {
         try {
             Optional<User> userToUpdate = userRepository.findByUsername(username);
             Clinic tmp = null;
-            for (Clinic clinic2: userToUpdate.get().getClinics()) {
+            for (Clinic clinic2 : userToUpdate.get().getClinics()) {
                 if (clinic2.getName().compareTo(clinic.getName()) == 0) {
                     tmp = clinic2;
                 }

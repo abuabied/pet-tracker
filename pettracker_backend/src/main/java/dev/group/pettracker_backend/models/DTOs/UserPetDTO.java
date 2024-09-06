@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class UserPetDTO {
     private String username;
     private Pet pet;
+    private String oldName;
 }

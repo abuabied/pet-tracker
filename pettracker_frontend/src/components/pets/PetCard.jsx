@@ -4,6 +4,12 @@ import { useEffect, useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import { EmptyLine } from "../helper components/EmptyLines";
 import { StyledButton } from "../helper components/StyledButton";
+import { updatePet } from "../../services/apiServices";
+import { getCookie } from "../../helpers/helperFunctions";
+import { HttpStatusCode } from "axios";
+import { COOKIES_IDS, PETS_MESSAGES } from "../../consts/StringConsts";
+import { toast } from "react-toastify";
+import { validateNewPetData } from "../../helpers/validationFunctions";
 
 export const PetCard = ({ pet, removePet }) => {
     const [open, setOpen] = useState(false);
@@ -16,7 +22,6 @@ export const PetCard = ({ pet, removePet }) => {
         setIsDisabled(false);
         setShowEditButtons(true);
     };
-    const saveClick = () => { }
     const cancelEdit = () => {
         setIsDisabled(true);
         setShowEditButtons(false);
@@ -29,7 +34,7 @@ export const PetCard = ({ pet, removePet }) => {
             var thisImage = reader.result;
             setImgData(thisImage)
         };
-        reader.readAsDataURL(document.getElementById('image').files[0]);
+        reader.readAsDataURL(document.getElementById('imageInfo').files[0]);
     };
 
     const remove = async () => {
@@ -42,6 +47,7 @@ export const PetCard = ({ pet, removePet }) => {
     };
 
     const handleClose = () => {
+        cancelEdit();
         setOpen(false);
     };
 
@@ -52,6 +58,49 @@ export const PetCard = ({ pet, removePet }) => {
     const handleCloseConfirm = () => {
         setOpenConfirm(false);
     };
+
+    const save = async () => {
+        const name = document.getElementById("nameInfoInput");
+        const age = document.getElementById("ageInfoInput");
+        const weight = document.getElementById("weightInfoInput");
+        const species = document.getElementById("speciesInfoInput");
+        const breed = document.getElementById("breedInfoInput");
+
+        const cardName = document.getElementById("cardName");
+
+        const petData = {
+            name: name?.value?.trim() ? name?.value.trim() : name.placeholder,
+            age: age?.value?.trim() ? age?.value.trim() : age.placeholder,
+            weight: weight?.value?.trim() ? weight?.value.trim() : weight.placeholder,
+            species: species?.value?.trim() ? species?.value.trim() : species.placeholder,
+            breed: breed?.value?.trim() ? breed.value.trim() : breed.placeholder,
+            image: imgData ? imgData : pet.image,
+        };
+        const isValid = validateNewPetData(petData);
+        if (isValid?.length > 0) {
+            isValid.forEach((err) => {
+                toast.warning(err);
+            });
+        } else {
+            const user = getCookie(COOKIES_IDS.USERNAME)
+            const res = await updatePet(pet.name, petData, user);
+            switch (res?.status) {
+                case HttpStatusCode.Ok:
+                    window.location.reload();
+                    toast.success("Pet updated!");
+                    handleClose()
+                    
+                    break;
+                case HttpStatusCode.Conflict:
+                    toast.warning("Pet name already added, please choose a different name or add a number!");
+                    break;
+                default:
+                    toast.error(PETS_MESSAGES.ERROR_GENERAL);
+            }
+        }
+    }
+
+
     return (
         <Box>
             <Card
@@ -62,7 +111,7 @@ export const PetCard = ({ pet, removePet }) => {
                 }}
             >
                 <CardHeader
-                    id="name"
+                    id="cardName"
                     onClick={handleClickOpen}
                     title={pet?.name}
                     sx={{
@@ -146,7 +195,7 @@ export const PetCard = ({ pet, removePet }) => {
                                 gap: "2rem",
                             }}
                         >
-                            <StyledButton onClick={saveClick} buttonText={"Save"} />
+                            <StyledButton onClick={save} buttonText={"Save"} />
                             <StyledButton onClick={cancelEdit} buttonText={"Cancel"} />
                         </Box>
                     ) : (
@@ -159,35 +208,35 @@ export const PetCard = ({ pet, removePet }) => {
                     <h1>General Information:</h1>
                     <Box>
                         <h5>Name:</h5>
-                        {isDisabled ? <TextField id="nameInputInfo" value={pet?.name} disabled /> : <Input id="nameInputInfoInput" />}
+                        {isDisabled ? <TextField id="nameInfo" value={pet?.name} disabled /> : <Input id="nameInfoInput" placeholder={pet?.name} />}
                     </Box>
 
                     <EmptyLine />
 
                     <Box>
                         <h5>Age:</h5>
-                        {isDisabled ? <TextField id="ageInfo" value={pet.age === "" ? "Age" : pet.age} disabled /> : <Input id="ageInfoInput" type="number" />}
+                        {isDisabled ? <TextField id="ageInfo" value={pet.age === "" ? "Age" : pet.age} disabled /> : <Input id="ageInfoInput" type="number" placeholder={pet.age === "" ? "Age" : pet.age} />}
                     </Box>
 
                     <EmptyLine />
 
                     <Box>
                         <h5>Weight:</h5>
-                        {isDisabled ? <TextField id="weightInfo" value={pet.weight === "" ? "Weight" : pet.weight} disabled={isDisabled} /> : <Input id="weightInfoInput" type="number" />}
+                        {isDisabled ? <TextField id="weightInfo" value={pet.weight === "" ? "Weight" : pet.weight} disabled={isDisabled} /> : <Input id="weightInfoInput" type="number" placeholder={pet.weight === "" ? "Weight" : pet.weight} />}
                     </Box>
 
                     <EmptyLine />
 
                     <Box>
                         <h5>Species:</h5>
-                        {isDisabled ? <TextField id="speciesInfo" value={pet.species === "" ? "Species" : pet.species} disabled={isDisabled} /> : <Input id="speciesInfoInput" />}
+                        {isDisabled ? <TextField id="speciesInfo" value={pet.species === "" ? "Species" : pet.species} disabled={isDisabled} /> : <Input id="speciesInfoInput" placeholder={pet.species === "" ? "Species" : pet.species} />}
                     </Box>
 
                     <EmptyLine />
 
                     <Box>
                         <h5>Breed:</h5>
-                        {isDisabled ? <TextField id="breedInfo" value={pet.breed === "" ? "Breed" : pet.breed} disabled={isDisabled} /> : <Input id="breedInfoInput" />}
+                        {isDisabled ? <TextField id="breedInfo" value={pet.breed === "" ? "Breed" : pet.breed} disabled={isDisabled} /> : <Input id="breedInfoInput" placeholder={pet.breed === "" ? "Breed" : pet.breed} />}
                     </Box>
 
                     <EmptyLine />
@@ -212,20 +261,23 @@ export const PetCard = ({ pet, removePet }) => {
                     <hr style={{ width: "80%", textAlign: "left", marginLeft: "0", color: "black" }}></hr>
                     <h1>Medical Information:</h1>
                     <h3>Vaccines:</h3>
-                    <Button
-                            height={"3rem"}
-                            color={"info"}
-                            component="label"
-                            variant="contained"
-                            onClick={remove}
-                            sx={{
-                                borderRadius: 0,
-                                width: { xs: "250px", sm: "250px", md: "300px", lg: "350px" },
-                                fontSize: { xs: "small", sm: "small", md: "medium", lg: "large" },
-                            }}
-                        >
-                            {"Add Shot"}
-                        </Button>
+                    {
+                        <h1>map pet vacc</h1>
+                    }
+                    {/* <Button
+                        height={"3rem"}
+                        color={"info"}
+                        component="label"
+                        variant="contained"
+                        onClick={remove}
+                        sx={{
+                            borderRadius: 0,
+                            width: { xs: "250px", sm: "250px", md: "300px", lg: "350px" },
+                            fontSize: { xs: "small", sm: "small", md: "medium", lg: "large" },
+                        }}
+                    >
+                        {"Add Shot"}
+                    </Button> */}
                 </Container>
             </Dialog>
             <Dialog

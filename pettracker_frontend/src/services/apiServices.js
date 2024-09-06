@@ -76,6 +76,17 @@ export const removePets = async (pet, username) => {
   }
 };
 
+export const updatePet = async (oldName, pet, username) => {
+  try {
+    const response = await api.post(API_PATHS.UPDATE_PET, {username: username, pet: pet, oldName: oldName},  {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const addClinic= async (clinic, username) => {
   try {
     const response = await api.post(API_PATHS.ADD_CLINIC, {username: username, clinic: clinic}, {
