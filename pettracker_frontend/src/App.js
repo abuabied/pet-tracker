@@ -9,6 +9,7 @@ import { RegisterView } from "./pages/profile/RegisterView";
 import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ProfileInfo } from "./pages/profile/ProfileInfo";
 import { PetsPage } from "./pages/pets/PetsPage";
+import { ClinicsPage } from "./pages/clinics/ClinicsPage";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
           </Route>
           <Route path="/pets" element={<PetsPage />} />
           <Route path="/visits" element={<h1>My visits</h1>} />
-          <Route path="/clinics" element={<h1>My clinics</h1>} />
+          <Route path="/clinics" element={<ClinicsPage />} />
           <Route path="/help" element={<HelpPage />} />
           <Route path="/*" element={<NoPage />} />
         </Route>

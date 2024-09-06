@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class UserClinicDTO {
     private String username;
     private Clinic clinic;
+    private String oldName;
 }

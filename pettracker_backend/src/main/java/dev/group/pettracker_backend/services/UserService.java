@@ -263,6 +263,42 @@ public class UserService {
 
     }
 
+
+    public ResponseEntity<String> updateClinic(String oldName, Clinic clinic, String username) {
+        try {
+            Optional<User> userToUpdate = userRepository.findByUsername(username);
+            if (!userToUpdate.isEmpty()) {
+                if (userToUpdate.get().getPets() == null) {
+                    userToUpdate.get().setPets(new HashSet<>());
+                }
+                Clinic tmpClinic = null;
+                for (Clinic clinic2 : userToUpdate.get().getClinics()) {
+
+                    if (clinic2.getName().compareTo(clinic.getName()) == 0) {
+                        if (clinic.getName().compareTo(oldName) != 0) {
+                            return new ResponseEntity<>(HttpStatus.CONFLICT);
+                        }
+                    }
+                    if (clinic2.getName().compareTo(oldName) == 0) {
+                        tmpClinic = clinic2;
+                    }
+                }
+                userToUpdate.get().getClinics().remove(tmpClinic);
+                userToUpdate.get().getClinics().add(clinic);
+
+                if (userRepository.save(userToUpdate.get()) != null) {
+                    return new ResponseEntity<>(HttpStatus.OK);
+                }
+                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception err) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
     private Optional<User> checkIfUserExists(User user) {
         Optional<User> checkUser = Optional.empty();
         try {
