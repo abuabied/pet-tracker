@@ -268,8 +268,8 @@ public class UserService {
         try {
             Optional<User> userToUpdate = userRepository.findByUsername(username);
             if (!userToUpdate.isEmpty()) {
-                if (userToUpdate.get().getPets() == null) {
-                    userToUpdate.get().setPets(new HashSet<>());
+                if (userToUpdate.get().getClinics() == null) {
+                    userToUpdate.get().setClinics(new HashSet<>());
                 }
                 Clinic tmpClinic = null;
                 for (Clinic clinic2 : userToUpdate.get().getClinics()) {

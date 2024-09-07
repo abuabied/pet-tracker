@@ -37,6 +37,7 @@ export const API_PATHS = {
   ADD_CLINIC: "/user/addClinic",
   REMOVE_CLINIC: "/user/removeClinic",
   GET_CLINICS: "/user/getClinics",
+  UPDATE_CLINIC: "/user/updateClinic",
 };
 
 export const COOKIES_IDS = {

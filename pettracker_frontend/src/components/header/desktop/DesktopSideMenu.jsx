@@ -3,7 +3,6 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
 import { scrollToTop } from "../../../helpers/setWindowSize";
-import { NotificationsWindow } from "../app_bar/notifications/NotificationsWindow";
 
 export const DesktopSideMenu = () => {
   const navigate = useNavigate();
@@ -13,8 +12,6 @@ export const DesktopSideMenu = () => {
   };
   return (
     <Box sx={{ display: { xs: "none", md: "flex" } }}>
-      <NotificationsWindow />
-
       <IconButton
         size="large"
         edge="end"

@@ -158,4 +158,20 @@ public class UserController {
 
         return userService.removeClinic(clinic, username);
     }
+
+    @PostMapping("/updateClinic")
+    public ResponseEntity<String> updateClinic(@RequestBody UserClinicDTO userClinic) {
+        if (userClinic == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        String username = userClinic.getUsername();
+        Clinic clinic = userClinic.getClinic();
+        String oldName = userClinic.getOldName();
+
+        if (clinic == null || username.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return userService.updateClinic(oldName, clinic, username);
+    }
 }

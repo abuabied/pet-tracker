@@ -1,13 +1,13 @@
 import { Button, Container } from "@mui/material"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { DoubleEmptyLines, EmptyLine } from "../../components/helper components/EmptyLines";
-import { NewPetDialog } from "../../components/pets/NewPetDialog";
 import { useEffect, useState } from "react";
 import { getClinics } from "../../services/apiServices";
 import { getCookie } from "../../helpers/helperFunctions";
 import { HttpStatusCode } from "axios";
 import { toast } from "react-toastify";
 import { ClinicsContainer } from "../../components/clinic/ClinicContainer";
+import { NewClinicDialog } from "../../components/clinic/NewClinicCard";
 
 export const ClinicsPage = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -58,7 +58,7 @@ export const ClinicsPage = () => {
             <DoubleEmptyLines />
             <ClinicsContainer items={items} />
         </Container>
-        <NewPetDialog isOpen={isOpen} onClose={onClose} />
+        <NewClinicDialog isOpen={isOpen} onClose={onClose} />
     </>
 
 }

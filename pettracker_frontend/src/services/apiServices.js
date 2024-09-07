@@ -119,3 +119,14 @@ export const removeClinic = async (clinic, username) => {
     return error.response;
   }
 };
+
+export const updateClinic = async (oldName, clinic, username) => {
+  try {
+    const response = await api.post(API_PATHS.UPDATE_CLINIC, {username: username, clinic: clinic, oldName: oldName},  {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};

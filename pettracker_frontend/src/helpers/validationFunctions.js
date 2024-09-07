@@ -11,6 +11,15 @@ export const validateNewPetData = (data) => {
     return errors;
 }
 
+export const validateNewClinicData = (data) => {
+  let errors = [];
+  let c1 = validateName(data?.name);
+  if (c1 !== true) {
+    errors.push(c1);
+  }
+    return errors;
+}
+
 export const validateRegisterData = (data) => {
   let errors = [];
   let c1 = validateName(data?.firstName);

@@ -31,23 +31,6 @@ export const ClinicsContainer = ({ items }) => {
         }
     }
 
-    // const removePet = async (petName) => {
-    //     const petData = {
-    //         name: petName.trim(),
-    //     };
-    //     const user = getCookie(COOKIES_IDS.USERNAME)
-    //     const res = await removePets(petData, user);
-    //     switch (res?.status) {
-    //         case HttpStatusCode.Ok:
-    //             toast.success("Pet removed!");
-    //             getPetsList();
-    //             setTimeout(1000);
-    //             break;
-    //         default:
-    //             toast.error(PETS_MESSAGES.ERROR_GENERAL);
-    //     }
-    // }
-
 
     useEffect(() => {
         const getClinicsList = async () => {
@@ -81,7 +64,7 @@ export const ClinicsContainer = ({ items }) => {
                     minWidth: "70vw",
                     minHeight: "fit-content",
                     display: "flex",
-                    gap: "2rem",
+                    gap: "3rem",
                     flexWrap: "wrap",
                     justifyContent: "center",
                     paddingTop: "3rem",
@@ -92,7 +75,7 @@ export const ClinicsContainer = ({ items }) => {
             >
                 {
                     myItems.map((clinic) => {
-                        return <ClinicCard clinic={clinic} removeClinic={()=>{}} />;
+                        return <ClinicCard clinic={clinic} />;
                     })
                 }
             </Container>
