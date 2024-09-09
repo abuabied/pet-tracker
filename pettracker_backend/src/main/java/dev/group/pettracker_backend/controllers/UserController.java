@@ -203,4 +203,20 @@ public class UserController {
 
         return userService.getVisits(user.getUsername());
     }
+
+    @PostMapping("/getVisitsForPet")
+    public ResponseEntity<HashSet<Visit>> getVisitsForPet(@RequestBody UserPetDTO userPet) {
+        if (userPet == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        String username = userPet.getUsername();
+        Pet pet = userPet.getPet();
+        String oldName = userPet.getOldName();
+        pet.setOwner(username);
+        if (pet == null || username.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return userService.getVisitsForPet(username, pet.getName());
+    }
 }

@@ -8,46 +8,48 @@ import { AppBar, Box, Button, Container, Dialog, IconButton, Input, TextField, T
 // import { toast } from "react-toastify";
 // import { removeClinic, updateClinic } from "../../services/apiServices";
 
-export const VisitCard = ({ visit }) => {
+export const VisitCard = ({ visit, showName }) => {
     return (
+        <Container sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+        }}>
             <Container sx={{
                 display: "flex",
-                flexDirection: "column",
-                gap: "1rem",
+                flexWrap: "wrap",
+                gap: "2rem"
             }}>
-                <Container sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: "2rem"
-                }}>
+                {showName === false ? <></>
+                    :
                     <Box>
                         <h5>Pet Name:</h5>
                         <TextField id="nameInfo" value={visit.petName === "" ? "Pet name" : visit.petName} />
                     </Box>
+                }
+
+                <Box>
+                    <h5>Clinic:</h5>
+                    <TextField id="clinicInfo" value={visit.clinic === "" ? "Clinic" : visit.clinic} />
+                </Box>
 
 
-                    <Box>
-                        <h5>Clinic:</h5>
-                        <TextField id="clinicInfo" value={visit.clinic === "" ? "Clinic" : visit.clinic}/>
-                    </Box>
+                <Box>
+                    <h5>Date:</h5>
+                    <TextField id="dateInput" value={visit.date === "" ? "Address" : visit.date} />
+                </Box>
 
+                <Box>
+                    <h5>Next Visit:</h5>
+                    <TextField id="nextVisitInput" value={visit.date === "" ? "Next Visit" : visit.nextVisit} />
+                </Box>
 
-                    <Box>
-                        <h5>Date:</h5>
-                        <TextField id="dateInput"  value={visit.date === "" ? "Address" : visit.date} />
-                    </Box>
-
-                    <Box>
-                        <h5>Next Visit:</h5>
-                        <TextField id="nextVisitInput" value={visit.date === "" ? "Next Visit" : visit.nextVisit } />
-                    </Box>
-
-                    <Box>
-                        <h5>Description:</h5>
-                        <TextField id="descInfoInput" value={visit.description=== "" ? "Description" : visit.description} />
-                    </Box>
-                </Container>
-                <hr style={{height:"2rem"}}></hr>
+                <Box>
+                    <h5>Description:</h5>
+                    <TextField id="descInfoInput" value={visit.description === "" ? "Description" : visit.description} />
+                </Box>
             </Container>
+            <hr style={{ height: "2rem" }}></hr>
+        </Container>
     )
 }

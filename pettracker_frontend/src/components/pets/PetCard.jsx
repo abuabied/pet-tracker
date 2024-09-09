@@ -4,14 +4,16 @@ import { useEffect, useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import { EmptyLine } from "../helper components/EmptyLines";
 import { StyledButton } from "../helper components/StyledButton";
-import { updatePet } from "../../services/apiServices";
+import { getVisitsForPets, updatePet } from "../../services/apiServices";
 import { getCookie } from "../../helpers/helperFunctions";
 import { HttpStatusCode } from "axios";
 import { COOKIES_IDS, PETS_MESSAGES } from "../../consts/StringConsts";
 import { toast } from "react-toastify";
 import { validateNewPetData } from "../../helpers/validationFunctions";
+import { VisitCard } from "../visit/VisitCard";
 
 export const PetCard = ({ pet, removePet }) => {
+    const [items, setItems] = useState([]);
     const [open, setOpen] = useState(false);
     const [openConfirm, setOpenConfirm] = useState(false);
     const [imgData, setImgData] = useState()
@@ -89,7 +91,7 @@ export const PetCard = ({ pet, removePet }) => {
                     window.location.reload();
                     toast.success("Pet updated!");
                     handleClose()
-                    
+
                     break;
                 case HttpStatusCode.Conflict:
                     toast.warning("Pet name already added, please choose a different name or add a number!");
@@ -99,6 +101,25 @@ export const PetCard = ({ pet, removePet }) => {
             }
         }
     }
+
+    useEffect(() => {
+        const getVisitsList = async () => {
+            const user = {
+                username: getCookie("username"),
+            };
+            const res = await getVisitsForPets(user.username, { name: pet.name });
+            switch (res?.status) {
+                case HttpStatusCode.Ok:
+                    let tmpList = res?.data
+                    tmpList.sort((a, b) => new Date(b.id) - new Date(a.id));
+                    setItems(tmpList)
+                    break;
+                default:
+                    toast.warning("Could not retrieve all visits for pet");
+            }
+        }
+        getVisitsList()
+    }, []);
 
 
     return (
@@ -261,9 +282,9 @@ export const PetCard = ({ pet, removePet }) => {
                     <hr style={{ width: "80%", textAlign: "left", marginLeft: "0", color: "black" }}></hr>
                     <h1>Medical Information:</h1>
                     <h3>Vaccines:</h3>
-                    {
-                        <h1>map pet vacc</h1>
-                    }
+                    {items.map((visit) => {
+                        return <VisitCard visit={visit} showName={false} />;
+                    })}
                     {/* <Button
                         height={"3rem"}
                         color={"info"}

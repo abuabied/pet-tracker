@@ -34,7 +34,6 @@ export const NewVisitDialog = ({ isOpen, onClose }) => {
             description: description?.value?.trim() ? description?.value.trim() : "",
         };
         const isValid = validateNewVisitData(data);
-        console.log(data)
         if (isValid?.length > 0) {
             isValid.forEach((err) => {
                 toast.warning(err);

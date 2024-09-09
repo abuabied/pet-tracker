@@ -40,6 +40,7 @@ export const API_PATHS = {
   UPDATE_CLINIC: "/user/updateClinic",
   ADD_VISIT: "/user/addVisit",
   GET_VISITS: "/user/getVisits",
+  GET_VISITS_FOR_PET: "/user/getVisitsForPet"
 };
 
 export const COOKIES_IDS = {

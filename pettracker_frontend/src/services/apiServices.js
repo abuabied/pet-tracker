@@ -152,3 +152,14 @@ export const getVisits = async (user) => {
     return error.response;
   }
 };
+
+export const getVisitsForPets = async (username, pet) => {
+  try {
+    const response = await api.post(API_PATHS.GET_VISITS_FOR_PET, {username: username, pet: pet},  {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};

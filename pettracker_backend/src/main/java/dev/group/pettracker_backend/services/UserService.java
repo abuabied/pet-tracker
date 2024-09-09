@@ -23,6 +23,8 @@ import java.util.Set;
 
 import java.time.format.DateTimeFormatter;  
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
+
 
 @Service("user")
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
@@ -339,6 +341,26 @@ public class UserService {
                     userToUpdate.get().setClinics(new HashSet<>());
                 }
                 HashSet<Visit> visits = userToUpdate.get().getVisits();
+                return new ResponseEntity<>(visits, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception err) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    public ResponseEntity<HashSet<Visit>> getVisitsForPet(String username, String petName) {
+        try {
+            Optional<User> userToUpdate = userRepository.findByUsername(username);
+            if (!userToUpdate.isEmpty()) {
+                if (userToUpdate.get().getClinics() == null) {
+                    userToUpdate.get().setClinics(new HashSet<>());
+                }
+                HashSet<Visit> visits = userToUpdate.get().getVisits().stream()
+                .filter(visit -> petName.equals(visit.getPetName()))
+                .collect(Collectors.toCollection(HashSet::new));
                 return new ResponseEntity<>(visits, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
