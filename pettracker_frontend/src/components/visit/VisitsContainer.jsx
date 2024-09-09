@@ -4,34 +4,35 @@ import { useEffect, useState } from "react";
 import { getCookie } from "../../helpers/helperFunctions";
 import { toast } from "react-toastify";
 import { HttpStatusCode } from "axios";
-import { getClinics } from "../../services/apiServices";
-import { COOKIES_IDS, PETS_MESSAGES } from "../../consts/StringConsts";
-import { ClinicCard } from "./ClinicCard";
+import { getVisits } from "../../services/apiServices";
+import { VisitCard } from "./VisitCard";
 
-export const ClinicsContainer = ({ items }) => {
+export const VisitsContainer = ({ items }) => {
     const [myItems, setItems] = useState(items)
 
-    const onChange = () => {
-        const val = document.getElementById("search").value
-        const filtered = items.filter((pet) => { return pet?.name.includes(val) })
-        setItems(filtered)
-    }
+    // const onChange = () => {
+    //     const val = document.getElementById("search").value
+    //     const filtered = items.filter((pet) => { return pet?.name.includes(val) })
+    //     setItems(filtered)
+    // }
 
     useEffect(() => {
-        const getClinicsList = async () => {
+        const getVisitsList = async () => {
             const user = {
                 username: getCookie("username"),
             };
-            const res = await getClinics(user);
+            const res = await getVisits(user);
             switch (res?.status) {
                 case HttpStatusCode.Ok:
-                    setItems(res?.data)
+                    let tmpList = res?.data
+                    tmpList.sort((a, b) => new Date(b.id) - new Date(a.id));
+                    setItems(tmpList)
                     break;
                 default:
-                    toast.warning("Could not retrieve all clinics");
+                    toast.warning("Could not retrieve all visits");
             }
         }
-        getClinicsList()
+        getVisitsList()
     }, []);
 
     return (
@@ -41,8 +42,8 @@ export const ClinicsContainer = ({ items }) => {
             minHeight: "50vh",
             minWidth: "fit-content"
         }}>
-            <TextField id="search" label="Search..." variant="standard" onChange={onChange} />
-            <TripleEmptyLines />
+            {/* <TextField id="search" label="Search..." variant="standard" onChange={onChange} />
+            <TripleEmptyLines /> */}
             <Container
                 sx={{
                     flexDirection: "column",
@@ -59,8 +60,8 @@ export const ClinicsContainer = ({ items }) => {
                 }}
             >
                 {
-                    myItems.map((clinic) => {
-                        return <ClinicCard clinic={clinic} />;
+                    myItems.map((visit) => {
+                        return <VisitCard visit={visit} />;
                     })
                 }
             </Container>

@@ -27,7 +27,7 @@ public class User {
 
     private HashSet<Pet> pets;
 
-    private HashSet<String> visits;
+    private HashSet<Visit> visits;
 
     private HashSet<Clinic> clinics;
 

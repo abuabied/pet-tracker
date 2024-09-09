@@ -64,27 +64,6 @@ export const NewClinicDialog = ({ isOpen, onClose }) => {
                     <TextField id="addressNew" placeholder="Address" />
                 </Box>
 
-                <EmptyLine />
-
-                {/* <Box>
-                    <h5>Species:</h5>
-                    <TextField id="species" placeholder="Species" />
-                </Box>
-
-                <EmptyLine />
-
-                <Box>
-                    <h5>Breed:</h5>
-                    <TextField id="breed" placeholder="Breed" />
-                </Box>
-
-                <EmptyLine />
-
-                <Box>
-                    <h5>Image:</h5>
-                    <input id="image" onChange={uploadImg} type="file" name="filename" accept="image/png, image/jpeg" />
-                </Box> */}
-
                 <DoubleEmptyLines />
                 <Button variant="contained" color="success" onClick={save} sx={{ width: "70%" }}>Save</Button>
                 <EmptyLine />

@@ -3,8 +3,10 @@ package dev.group.pettracker_backend.controllers;
 import dev.group.pettracker_backend.models.Clinic;
 import dev.group.pettracker_backend.models.Pet;
 import dev.group.pettracker_backend.models.User;
+import dev.group.pettracker_backend.models.Visit;
 import dev.group.pettracker_backend.models.DTOs.UserClinicDTO;
 import dev.group.pettracker_backend.models.DTOs.UserPetDTO;
+import dev.group.pettracker_backend.models.DTOs.UserVisitDTO;
 import dev.group.pettracker_backend.services.UserService;
 
 import java.util.HashSet;
@@ -173,5 +175,32 @@ public class UserController {
         }
 
         return userService.updateClinic(oldName, clinic, username);
+    }
+
+    @PostMapping("/addVisit")
+    public ResponseEntity<String> addVisit(@RequestBody UserVisitDTO userVisit) {
+        if (userVisit == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        String username = userVisit.getUsername();
+        Visit visit = userVisit.getVisit();
+
+        if (visit == null || username.equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return userService.addVisit(visit, username);
+    }
+
+    @PostMapping("/getVisits")
+    public ResponseEntity<HashSet<Visit>> getVisits(@RequestBody User user) {
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (user.getUsername().equals("")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return userService.getVisits(user.getUsername());
     }
 }

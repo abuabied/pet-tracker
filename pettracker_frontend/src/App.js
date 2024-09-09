@@ -10,6 +10,7 @@ import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ProfileInfo } from "./pages/profile/ProfileInfo";
 import { PetsPage } from "./pages/pets/PetsPage";
 import { ClinicsPage } from "./pages/clinics/ClinicsPage";
+import { VisitsPage } from "./pages/visits/VisitPage";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
             <Route path="/profile/register" element={<RegisterView />} />
           </Route>
           <Route path="/pets" element={<PetsPage />} />
-          <Route path="/visits" element={<h1>My visits</h1>} />
+          <Route path="/visits" element={<VisitsPage />} />
           <Route path="/clinics" element={<ClinicsPage />} />
           <Route path="/help" element={<HelpPage />} />
           <Route path="/*" element={<NoPage />} />

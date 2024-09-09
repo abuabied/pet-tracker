@@ -6,14 +6,13 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "visits")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Visit {
     private String id;
 
-    private Data date;
-
-    private String userId;
+    private String date;
 
     private String petName;
 
@@ -21,7 +20,5 @@ public class Visit {
 
     private String description;
 
-    private String status;
-
-
+    private String nextVisit;
 }

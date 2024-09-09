@@ -130,3 +130,25 @@ export const updateClinic = async (oldName, clinic, username) => {
     return error.response;
   }
 };
+
+export const addVisit= async (visit, username) => {
+  try {
+    const response = await api.post(API_PATHS.ADD_VISIT, {username: username, visit: visit}, {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const getVisits = async (user) => {
+  try {
+    const response = await api.post(API_PATHS.GET_VISITS, user , {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};

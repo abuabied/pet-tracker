@@ -5,9 +5,14 @@ import dev.group.pettracker_backend.Repositories.UserRepository;
 import dev.group.pettracker_backend.models.Clinic;
 import dev.group.pettracker_backend.models.Pet;
 import dev.group.pettracker_backend.models.User;
+import dev.group.pettracker_backend.models.Visit;
+
+import org.checkerframework.checker.units.qual.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.mongodb.core.aggregation.DateOperators.DateToString;
+import org.springframework.format.datetime.standard.DateTimeContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,6 +20,9 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime;
 
 @Service("user")
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
@@ -263,7 +271,6 @@ public class UserService {
 
     }
 
-
     public ResponseEntity<String> updateClinic(String oldName, Clinic clinic, String username) {
         try {
             Optional<User> userToUpdate = userRepository.findByUsername(username);
@@ -290,6 +297,49 @@ public class UserService {
                     return new ResponseEntity<>(HttpStatus.OK);
                 }
                 return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception err) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    public ResponseEntity<String> addVisit(Visit visit, String username) {
+        try {
+            Optional<User> userToUpdate = userRepository.findByUsername(username);
+            if (!userToUpdate.isEmpty()) {
+                if (userToUpdate.get().getVisits() == null) {
+                    userToUpdate.get().setVisits(new HashSet<>());
+                }
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+                LocalDateTime now = LocalDateTime.now(); 
+                visit.setId(dtf.format(now));
+                userToUpdate.get().getVisits().add(visit);
+
+                if (userRepository.save(userToUpdate.get()) != null) {
+                    return new ResponseEntity<>(HttpStatus.OK);
+                }
+                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception err) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    public ResponseEntity<HashSet<Visit>> getVisits(String username) {
+        try {
+            Optional<User> userToUpdate = userRepository.findByUsername(username);
+            if (!userToUpdate.isEmpty()) {
+                if (userToUpdate.get().getClinics() == null) {
+                    userToUpdate.get().setClinics(new HashSet<>());
+                }
+                HashSet<Visit> visits = userToUpdate.get().getVisits();
+                return new ResponseEntity<>(visits, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

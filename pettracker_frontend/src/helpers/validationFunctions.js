@@ -8,7 +8,7 @@ export const validateNewPetData = (data) => {
   if (c1 !== true) {
     errors.push(c1);
   }
-    return errors;
+  return errors;
 }
 
 export const validateNewClinicData = (data) => {
@@ -17,7 +17,20 @@ export const validateNewClinicData = (data) => {
   if (c1 !== true) {
     errors.push(c1);
   }
-    return errors;
+  return errors;
+}
+
+export const validateNewVisitData = (data) => {
+  let errors = [];
+  let c1 = validateSelection(data?.petName);
+  if (c1 !== true) {
+    errors.push(c1);
+  }
+  let c2 = validateSelection(data?.clinic);
+  if (c2 !== true) {
+    errors.push(c2);
+  }
+  return errors;
 }
 
 export const validateRegisterData = (data) => {
@@ -86,7 +99,7 @@ export const validateUpdatedData = (data, isUpdate) => {
     errors.push(validatePasswordContentLetters(data?.password));
     errors.push(validatePasswordContentDigit(data?.password));
   }
-  
+
   return errors.filter((err) => err !== true);
 };
 
@@ -125,6 +138,11 @@ const validatePasswordContentDigit = (password) => {
 const validateName = (name) => {
   const valid = Boolean(name?.match(/^[A-Za-z]*$/)) && name?.length >= 3;
   return valid ? true : REGISTRATION_MESSAGES.INVALID_NAME;
+};
+
+const validateSelection = (name) => {
+  const valid = Boolean(name?.match(/^[A-Za-z]*$/)) && name?.length >= 3;
+  return (name && name != "") ? true : "Make a valid selection from list";
 };
 
 const validateUserName = (name) => {
