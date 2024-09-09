@@ -62,9 +62,6 @@ Profile info...
 -Frontend base is ready - Basic website layout, Main flow like signin and register is available. Ready for new features
 
 
-**Ready for Task 2**
-
-*Add new features*
 
 ***Task 2:***
 
@@ -82,8 +79,6 @@ Profile info...
 
 *Create the New item form - inputs, buttons, and event handlers
 
-***TO DO***
-
 -Complete the Add item feature
 
 *Add valid items to the database
@@ -99,19 +94,30 @@ Profile info...
 
 **Summary**
 
--Backend has more services - Handle all user requests and data
+-Backend has more services - Handle main user requests and data for each model
 
--Frontend is ready - Complete flow, responsive, with main features added.
+-Frontend is ready - Complete main flow, responsive, with main features added.
 
-
-**Ready for Task 3**
 
 *User review - final touch-ups - testing*
 
 ***Task 3:***
 
--All flows are working
+-Data edit
 
--Pleasant user experience 
+-Connect models with each other. 
 
--Additional features
+-Adding clinics and pets will add selection data to visits.
+
+-Adding visits update pets.
+
+-Easy to use
+
+
+
+**Summary**
+
+-Backend complete services - Handle all user requests and data handling
+
+-Frontend is ready - Complete flow, with main features added and connected properly. 
+
