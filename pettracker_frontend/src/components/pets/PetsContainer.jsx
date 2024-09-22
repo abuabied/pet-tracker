@@ -26,8 +26,8 @@ export const ItemsContainer = ({ items }) => {
             case HttpStatusCode.Ok:
                 setItems(res?.data)
                 break;
-            default:
-                toast.warning("Could not retrieve all pets");
+            // default:
+            //     toast.warning("Could not retrieve all pets");
         }
     }
 
@@ -59,8 +59,8 @@ export const ItemsContainer = ({ items }) => {
                 case HttpStatusCode.Ok:
                     setItems(res?.data)
                     break;
-                default:
-                    toast.warning("Could not retrieve all pets");
+                // default:
+                //     toast.warning("Could not retrieve all pets");
             }
         }
         getPetsList()

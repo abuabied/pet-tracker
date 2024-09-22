@@ -114,8 +114,8 @@ export const PetCard = ({ pet, removePet }) => {
                     tmpList.sort((a, b) => new Date(b.id) - new Date(a.id));
                     setItems(tmpList)
                     break;
-                default:
-                    toast.warning("Could not retrieve all visits for pet");
+                // default:
+                //     toast.warning("Could not retrieve all visits for pet");
             }
         }
         getVisitsList()

@@ -18,7 +18,6 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { scrollToTop } from "../../../helpers/setWindowSize";
-import { REGISTRATION_MESSAGES } from "../../../consts/StringConsts";
 import { isLogged } from "../../../helpers/helperFunctions";
 import { toast } from "react-toastify";
 
@@ -35,7 +34,7 @@ export const MobileMenuBar = () => {
       navigate(`${"/" + pageName}`);
     } else {
       toast.warning(
-        REGISTRATION_MESSAGES.GENERAL_MESSAGES.LOGIN_BEFORE_ACTION
+        "Login first!"
       );
     }
   };

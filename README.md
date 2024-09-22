@@ -120,4 +120,3 @@ Profile info...
 -Backend complete services - Handle all user requests and data handling
 
 -Frontend is ready - Complete flow, with main features added and connected properly. 
-

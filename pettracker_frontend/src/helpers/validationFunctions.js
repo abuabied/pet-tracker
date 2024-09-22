@@ -136,7 +136,7 @@ const validatePasswordContentDigit = (password) => {
 };
 
 const validateName = (name) => {
-  const valid = Boolean(name?.match(/^[A-Za-z]*$/)) && name?.length >= 3;
+  const valid = Boolean(name?.match(/^[A-Za-z0-9]*$/)) && name?.length >= 3;
   return valid ? true : REGISTRATION_MESSAGES.INVALID_NAME;
 };
 

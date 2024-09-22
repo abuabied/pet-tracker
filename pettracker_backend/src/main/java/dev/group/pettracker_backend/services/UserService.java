@@ -7,19 +7,15 @@ import dev.group.pettracker_backend.models.Pet;
 import dev.group.pettracker_backend.models.User;
 import dev.group.pettracker_backend.models.Visit;
 
-import org.checkerframework.checker.units.qual.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.mongodb.core.aggregation.DateOperators.DateToString;
-import org.springframework.format.datetime.standard.DateTimeContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 import java.time.format.DateTimeFormatter;  
 import java.time.LocalDateTime;
@@ -70,6 +66,11 @@ public class UserService {
 
     public ResponseEntity<HttpStatus> updateUser(User user) {
         try {
+            if(user.getPassword().compareTo("") == 0) {
+                Optional<User> checkUser = userRepository.findByUsername(user.getUsername());
+                String passwrd = checkUser.get().getPassword();
+                user.setPassword(passwrd);
+            }
             userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception err) {
