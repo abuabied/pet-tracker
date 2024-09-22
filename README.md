@@ -13,7 +13,7 @@ How to run:
 
 -Clone repository
 
--In the FrontEnd folder run "npm install" to install the necessary modules, then "npm start" to run the FE website (running on "https://localhost:3000/")
+-In the FrontEnd folder run "npm install" to install the necessary modules, then "npm start" to run the FE website (running on "http://localhost:3000/")
 
 -Run the main function in the PettrackerApplication.java file to start the servers
 
@@ -120,4 +120,3 @@ Profile info...
 -Backend complete services - Handle all user requests and data handling
 
 -Frontend is ready - Complete flow, with main features added and connected properly. 
-
