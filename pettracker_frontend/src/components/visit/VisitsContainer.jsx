@@ -25,6 +25,7 @@ export const VisitsContainer = ({ items }) => {
             switch (res?.status) {
                 case HttpStatusCode.Ok:
                     let tmpList = res?.data
+                    tmpList = tmpList ? tmpList : []
                     tmpList.sort((a, b) => new Date(b.id) - new Date(a.id));
                     setItems(tmpList)
                     break;

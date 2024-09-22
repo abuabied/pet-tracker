@@ -211,7 +211,6 @@ public class UserController {
         }
         String username = userPet.getUsername();
         Pet pet = userPet.getPet();
-        String oldName = userPet.getOldName();
         pet.setOwner(username);
         if (pet == null || username.equals("")) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
