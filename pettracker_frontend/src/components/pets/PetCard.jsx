@@ -44,7 +44,24 @@ export const PetCard = ({ pet, removePet }) => {
         handleCloseConfirm();
     }
 
-    const handleClickOpen = () => {
+    const handleClickOpen = async () => {
+        const getVisitsList = async () => {
+            const user = {
+                username: getCookie("username"),
+            };
+            console.log(pet.name)
+            const res = await getVisitsForPets(user.username, { name: pet.name });
+            switch (res?.status) {
+                case HttpStatusCode.Ok:
+                    let tmpList = res?.data
+                    tmpList.sort((a, b) => new Date(b.id) - new Date(a.id));
+                    setItems(tmpList)
+                    break;
+                // default:
+                //     toast.warning("Could not retrieve all visits for pet");
+            }
+        }
+        await getVisitsList()
         setOpen(true);
     };
 
@@ -101,26 +118,6 @@ export const PetCard = ({ pet, removePet }) => {
             }
         }
     }
-
-    useEffect(() => {
-        const getVisitsList = async () => {
-            const user = {
-                username: getCookie("username"),
-            };
-            const res = await getVisitsForPets(user.username, { name: pet.name });
-            switch (res?.status) {
-                case HttpStatusCode.Ok:
-                    let tmpList = res?.data
-                    tmpList.sort((a, b) => new Date(b.id) - new Date(a.id));
-                    setItems(tmpList)
-                    break;
-                // default:
-                //     toast.warning("Could not retrieve all visits for pet");
-            }
-        }
-        getVisitsList()
-    }, []);
-
 
     return (
         <Box>
